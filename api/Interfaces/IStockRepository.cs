@@ -7,10 +7,12 @@ namespace api.Interfaces
     {
         Task<List<Stock>> GetAllSync();
         Task<Stock?> GetByIdAsync(int id);
-        Task<Stock> CreateStockAsync(Stock stock);  
+        Task<Stock> CreateStockAsync(Stock stock);
 
-        Task<Stock?> UpdateStockAsync(int id, UpdateStockDTO stock);  
+        Task<Stock?> UpdateStockAsync(int id, UpdateStockDTO stock);
 
-        Task<Stock?> DeleteStockAsync(int id);  
+        Task<Stock?> DeleteStockAsync(int id);
+
+        Task<bool> StockExists(int id);
     }
 }

@@ -15,7 +15,8 @@ namespace api.Mappers
                 stock.Purchase,
                 stock.LastDiv,
                 stock.Industry,
-                stock.MarketCap
+                stock.MarketCap,
+                stock.Comments.Select(c => c.ToDTO()).ToList()
             );
         }
 

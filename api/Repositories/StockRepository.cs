@@ -6,23 +6,20 @@ using Microsoft.EntityFrameworkCore;
 
 namespace api.Repositories
 {
-    public class StockRepository : IStockRepository
+    public class StockRepository(AppDbContext db) : IStockRepository
     {
-        AppDbContext _db;
-
-        public StockRepository(AppDbContext db)
-        {
-            _db = db;
-        }
+        AppDbContext _db = db;
 
         public async Task<List<Stock>> GetAllSync()
         {
-            return await _db.Stock.ToListAsync();
+            return await _db.Stock.Include(c => c.Comments).ToListAsync();
         }
 
         public async Task<Stock?> GetByIdAsync(int id)
         {
-            return await _db.Stock.FirstAsync(x => x.Id == id);
+            return await _db
+                .Stock.Include(c => c.Comments)
+                .FirstOrDefaultAsync(stock => stock.Id == id);
         }
 
         public async Task<Stock> CreateStockAsync(Stock stock)
@@ -60,6 +57,11 @@ namespace api.Repositories
 
             _db.Remove(deletedStock);
             return deletedStock;
+        }
+
+        public async Task<bool> StockExists(int id)
+        {
+            return await _db.Stock.AnyAsync(stock => stock.Id == id);
         }
     }
 }

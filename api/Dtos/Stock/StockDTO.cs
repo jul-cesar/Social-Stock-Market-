@@ -1,3 +1,5 @@
+using api.Dtos.Comment;
+
 namespace api.Dtos.Stock;
 
 public record StockDTO(
@@ -7,5 +9,6 @@ public record StockDTO(
     decimal Purchase,
     decimal LastDiv,
     string Industry,
-    long MarketCap
+    long MarketCap,
+    List<CommentDTO> Comments
 );
