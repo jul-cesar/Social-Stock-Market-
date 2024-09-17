@@ -12,6 +12,7 @@ public static class CommentMapper
             comment.Title,
             comment.Content,
             comment.CreatedAt,
+            comment.AppUser.UserName,
             comment.StockId
         );
     }

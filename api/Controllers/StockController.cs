@@ -25,8 +25,9 @@ public class StockController : ControllerBase
         {
             return BadRequest(ModelState);
         }
-        var stocks = await StockRepo.GetAllSync(query);
-        return Ok(stocks);
+        var stocks = await StockRepo.GetAllAsync(query);
+        var stockDto = stocks.Select(s => s.ToDTO()).ToList();  
+        return Ok(stockDto);
     }
 
     [HttpGet("{id:int}")]

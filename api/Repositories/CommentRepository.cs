@@ -19,7 +19,7 @@ public class CommentRepository(AppDbContext db) : ICommentRepository
 
     public async Task<List<Comment>> GetAllCommentsAsync()
     {
-        return await _db.Comments.ToListAsync();
+        return await _db.Comments.Include(c => c.AppUser).ToListAsync();
     }
 
     public Task<List<Comment>> GetStockCommentsAsync(int stockId)
@@ -29,7 +29,7 @@ public class CommentRepository(AppDbContext db) : ICommentRepository
 
     public async Task<Comment?> GetCommentByIdAsync(int id)
     {
-        return await _db.Comments.FindAsync(id);
+        return await _db.Comments.Include(c => c.AppUser).FirstOrDefaultAsync(c => c.Id == id);
     }
 
     public async Task<Comment?> UpdateCommentAsync(int id, UpdateCommentDTO comment)

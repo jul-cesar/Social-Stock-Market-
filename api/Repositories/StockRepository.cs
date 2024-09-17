@@ -11,9 +11,9 @@ public class StockRepository(AppDbContext db) : IStockRepository
 {
     AppDbContext _db = db;
 
-    public async Task<List<Stock>> GetAllSync(StockObjectQuery query)
+    public async Task<List<Stock>> GetAllAsync(StockObjectQuery query)
     {
-        var stocks = _db.Stock.Include(c => c.Comments).AsQueryable();
+        var stocks = _db.Stock.Include(c => c.Comments).ThenInclude(c => c.AppUser).AsQueryable();
 
         if (!String.IsNullOrWhiteSpace(query.CompanyName))
         {
